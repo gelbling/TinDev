@@ -1,0 +1,8 @@
+
+<form method="POST" action="{% url 'RecruiterProfile' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form}}
+    <button>
+        Create
+    </button>
+</form>
