@@ -1,1 +1,90 @@
-<h1>HOME PAGE</h1>
+{% extends  'tindev/base.html' %}
+
+{% block main %}
+    <!doctype html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>TinDev Homepage</title>
+
+        <!-- Add Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+    </head>
+	<body>
+
+		<div class="container">
+            <div class="row" style=background-color:#E47EA1;>
+                <!-- I DON'T KNOW WHY THE IMAGE DOESN'T APPEAR-->
+                <img width="500px" class="img-thumbnail rounded-circle" src="tindev/tindevLogo.jpg" alt="TinDev Logo" >
+            </div>
+            <div class="row" style=background-color:#E47EA1;>
+                <br>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">          
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                      <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                          <a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#">Candidate Dashboard</a>
+                        </li>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#">Recruiter Dashboard</a>
+                        </li>
+                      </ul>
+                  </nav>
+            </div>
+            <br>
+			<div class="row" style=background-color:#F3BACC;>
+				<div class="col-12">
+               	<br>
+					<h2 class="aboutTinDev" style=text-align:center;font-family:monospace>About TinDev</h2>
+					
+					<p class="aboutTinDev" style=text-align:center;font-family:monospace>
+						At its core, TinDev is meant to disrupt and innovate the recruiting process.
+                        It aims to facilitate the process of finding the perfect match for a technical position,
+                        whether it is a Software Engineering, Quality Engineering, or Full Stack Developer positions.
+                        TinDev makes it easy for any candidate wanting to find a job to register and be able to see
+                        open positions and demonstrate interest, whereas recruiters can also see qualified candidates
+                        within the area. We provice a product whose emphasis is on ease of use, whose navigation is
+                        straightforward, thus revolutionizing the professional scene and the area of recruiting forever.
+					</p>
+					<p class="aboutTinDev" style=text-align:center;font-family:monospace>
+						Current popular technical positions: 
+						<span class="badge text-bg-primary">Software Engineering</span>
+						<span class="badge text-bg-warning">Quality Engineering</span>
+						<span class="badge text-bg-danger">Full Stack Developer</span>
+                        <span class="badge text-bg-secondary">Web Developer</span>	
+                        <span class="badge text-bg-success">UX Designer</span>	
+                        <span class="badge text-bg-info">IT Product Manager</span>	
+					</p>
+                    <br>
+                    <p class="aboutTinDev" style=text-align:center;font-family:monospace>
+						Our application is home to some of the most amazing technical recruiters and candidates
+                        from around the globe, and our mission is to give them the platform to connect in the 
+                        simplest possible way! From having job postings and compability checks to even demonstrating
+                        interest and extending/receiving actual offers, TinDev has it all!
+					</p>
+                    <br>
+                    <p class="aboutTinDev" style=text-align:center;font-family:monospace>Remember, out motto is simple:</p>
+                    <br>
+                    <h3 class="aboutTinDev" style=text-align:center;font-family:monospace>
+						Connecting the world's smartest people, through the world's smartest platform.
+					</h3>
+                    <br>
+				</div>
+			</div>
+
+         <br>
+		</div>
+
+		<!-- Import's Bootstrap JS -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+	</body>
+
+	</html>
+
+{% endblock %}

@@ -4,9 +4,18 @@
 
 {% block main %}
     <div class="card">
+        <br>
         <div class="card-body">
         
-            <h3 class="card-title">Log in to TinDev</h3>
+            <h3 class="card-title" style=text-align:center;>Log in to TinDev</h3>
+            <div class="container" style=text-align:center;>
+                <label for="username"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="username" required>
+                <br>
+                <label for="password"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="password" required>
+                <br>
+            </div>
 
             <form method="post">
                 {% csrf_token %}
@@ -14,13 +23,14 @@
                 <input type="hidden" name="next" value="{{ next }}">
 
                 {{ form|crispy }}
-
+                <br>
                 <button type="submit" class="btn btn-primary btn-block">Log in</button>
             </form>
-
+            
+            <br>
             <p class="text-center">Don't have an account? <br>
                 <a href="/recruiterprofile">Create a Recruiter Profile</a> <br>
-                <a href="/candidateprofile">Create a Candidate Profile</a>
+                <a href="/candidateprofile">Create a Candidate Profile</a> <br>
             </p>
         </div>
     </div>
