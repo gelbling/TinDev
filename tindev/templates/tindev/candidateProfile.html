@@ -5,7 +5,7 @@
 {% block main %}
     <form method="POST" action="{% url 'CandidateProfile' %}" enctype="multipart/form-data">
         {% csrf_token %}
-        {{form}}
+        {{ form|crispy }}
         <button>
             Create
         </button>
