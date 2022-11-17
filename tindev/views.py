@@ -6,9 +6,12 @@ from tindev.forms import CandidateForm
 from tindev.models import CandidateProfile
 from tindev.forms import RecruiterForm
 from tindev.models import RecruiterProfile
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import AuthenticationForm
 
 
 def login(request):
+    
     return render(request, 'tindev/login.html')
 
 def candidateProfile(request):
@@ -26,3 +29,8 @@ def recruiterProfile(request):
             form.save()
         return redirect(login)
     return render(request, 'tindev/recruiterProfile.html', {'form':RecruiterForm}) 
+
+def home(request):
+    
+    return render(request, 'tindev/home.html') 
+	

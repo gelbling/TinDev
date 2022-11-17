@@ -18,3 +18,4 @@ class RecruiterProfile(models.Model):
     zip_code = models.CharField(max_length=100)
     username = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
+

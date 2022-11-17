@@ -1,1 +1,27 @@
-<p>WELCOME TO LOGIN PAGE</p>
+{% extends  'tindev/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block main %}
+    <div class="card">
+        <div class="card-body">
+        
+            <h3 class="card-title">Log in to TinDev</h3>
+
+            <form method="post">
+                {% csrf_token %}
+                
+                <input type="hidden" name="next" value="{{ next }}">
+
+                {{ form|crispy }}
+
+                <button type="submit" class="btn btn-primary btn-block">Log in</button>
+            </form>
+
+            <p class="text-center">Don't have an account? <br>
+                <a href="/recruiterprofile">Create a Recruiter Profile</a> <br>
+                <a href="/candidateprofile">Create a Candidate Profile</a>
+            </p>
+        </div>
+    </div>
+{% endblock %}
