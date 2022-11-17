@@ -1,8 +1,13 @@
+{% extends  'tindev/base.html' %}
 
-<form method="POST" action="{% url 'RecruiterProfile' %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{form}}
-    <button>
-        Create
-    </button>
-</form>
+{% load crispy_forms_tags %}
+
+{% block main %}
+    <form method="POST" action="{% url 'RecruiterProfile' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button>
+            Create
+        </button>
+    </form>
+{% endblock %}
