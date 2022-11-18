@@ -3,20 +3,21 @@ Project Contributors
 
 * **[Gabe Elbling](https://github.com/gelbling)**
 
-  * ... contribution 1 description ...
-  * ... contribution 2 description ...
+  * Created Candidate Form models for candidate sign in
+  * Helped in creating log-in page functionality
 
 * **[Andres Gonzalez](https://github.com/agonza42)**
 
-  * ... contribution 1 description ...
-  * ... contribution 2 description ...
+  * Started the Django project and app, pushed to GitHub
+  * Modified forms with Django Crispy Forms library to make it appealing
+  * Designed app home page and HTML templates with Bootstrap
 
 * **[Mariana Gonzalez](https://github.com/mgzzb)**
 
-  * ... contribution 1 description ...
-  * ... contribution 2 description ...
+  * Helped with HTML and Bootstrap webpage design
+  * Started and worked on the log-in page design and functionality
 
 * **[Anna Koziol](https://github.com/akoziol11)**
 
-  * ... contribution 1 description ...
-  * ... contribution 2 description ...
+  * Created Candidate Form models for candidate sign in
+  * Helped in creating log-in page functionality
