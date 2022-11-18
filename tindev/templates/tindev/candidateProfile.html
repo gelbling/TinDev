@@ -3,6 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block main %}
+    <h2> Candidate Profile </h2>
     <form method="POST" action="{% url 'CandidateProfile' %}" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|crispy }}
