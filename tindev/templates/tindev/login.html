@@ -8,18 +8,22 @@
         <div class="card-body">
         
             <h3 class="card-title" style=text-align:center;>Log in to TinDev</h3>
-            <div class="container" style=text-align:center;>
-                <label for="username"><b>Username</b></label>
-                <input type="text" placeholder="Enter Username" name="username" required>
-                <br>
-                <label for="password"><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="password" required>
-                <br>
-            </div>
 
             <form method="post">
                 {% csrf_token %}
-                
+                <div class="container" style=text-align:center;>
+                    <label for="username"><b>Username</b></label>
+                    <input type="text" placeholder="Enter Username" name="username" required>
+                    <br>
+                    <label for="password"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="password" required>
+                    <br>
+                </div>
+
+                {% if error %}
+                <p style="color:red; text-align: center">Invalid username or password</p>
+                {% endif %}
+
                 <input type="hidden" name="next" value="{{ next }}">
 
                 {{ form|crispy }}

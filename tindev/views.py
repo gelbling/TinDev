@@ -8,29 +8,54 @@ from tindev.forms import RecruiterForm
 from tindev.models import RecruiterProfile
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
 
 
-def login(request):
-    
+
+def user_login(request):
+
+    if request.POST:
+
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if user is None:
+            context = {'error':'Invalid username or password'}
+            return render(request, 'tindev/login.html', context)
+
+        login(request,user)
+        return render(request, 'tindev/loggedin.html')
+
     return render(request, 'tindev/login.html')
+
+
 
 def candidateProfile(request):
     if request.POST:
         form = CandidateForm(request.POST)
         if form.is_valid():
+            user = User.objects.create_user(username=form.cleaned_data['username'],
+                                 password=form.cleaned_data['password'])
             form.save()
-        return redirect(login)
+        return redirect(user_login)
     return render(request, 'tindev/candidateProfile.html', {'form':CandidateForm}) 
+
+
 
 def recruiterProfile(request):
     if request.POST:
         form = RecruiterForm(request.POST)
         if form.is_valid():
+            user = User.objects.create_user(username=form.cleaned_data['username'],
+                                 password=form.cleaned_data['password'])
             form.save()
-        return redirect(login)
+        return redirect(user_login)
     return render(request, 'tindev/recruiterProfile.html', {'form':RecruiterForm}) 
 
+
+
 def home(request):
-    
+
     return render(request, 'tindev/home.html') 
 	
