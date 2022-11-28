@@ -57,5 +57,13 @@ def recruiterProfile(request):
 
 def home(request):
 
-    return render(request, 'tindev/home.html') 
+    return render(request, 'tindev/home.html')
+
+def candidateDashboard(request):
+
+    return render(request, 'tindev/candidateDashboard.html')
+
+def recruiterDashboard(request):
+
+    return render(request, 'tindev/recruiterDashboard.html')  
 	

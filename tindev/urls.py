@@ -7,5 +7,7 @@ urlpatterns = [
     path('recruiterprofile/', views.recruiterProfile, name='RecruiterProfile'),
     path('login/', views.user_login, name='login'),
     path('', views.home, name='home'),
-    path('users/', include("django.contrib.auth.urls"))
+    path('users/', include("django.contrib.auth.urls")),
+    path('candidatedashboard/', views.candidateDashboard, name='CandidateDashboard'),
+    path('recruiterdashboard/', views.recruiterDashboard, name='RecruiterDashboard')
 ]

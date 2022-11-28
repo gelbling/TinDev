@@ -25,28 +25,33 @@ To get a local copy up and running follow these simple example steps.
 
 This is an example of how to list things you need to use the software and how to install them.
 * After installing and setting up Python, install pip
-  sh
+  ```sh
   python -m ensurepip --upgrade
-  
+  ```
+
 * After installing pip, install Django
-  sh
+  ```sh
   python -m pip install Django
-  
+  ```
+
 * Download Django Crispy Forms
-  sh
+  ```sh
   pip install django-crispy-forms
-  
+  ```
 
 ### Installation
 
 1. Clone the repo
-   sh
+   ```sh
    git clone https://github.com/agonza42/ParadigmsProjectGroup14.git
+   ```
    
 2. Create database tables
-   sh
+   ```sh
    python manage.py migrate
+   ```
    
 3. Run server
-   sh
+   ```sh
    python manage.py runserver
+   ```
