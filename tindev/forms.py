@@ -6,11 +6,11 @@ from .models import RecruiterProfile
 class CandidateForm(ModelForm):
 
     name = forms.TextInput()
-    zip_code = forms.TextInput()
+    zip_code = forms.NumberInput()
     skills = forms.TextInput()
-    years_experience = forms.TextInput()
+    years_experience = forms.NumberInput()
     username = forms.TextInput()
-    password = forms.TextInput()
+    password = forms.PasswordInput()
 
     class Meta:
         model = CandidateProfile
@@ -22,7 +22,7 @@ class RecruiterForm(ModelForm):
     company = forms.TextInput()
     zip_code = forms.TextInput()
     username = forms.TextInput()
-    password = forms.TextInput()
+    password = forms.PasswordInput()
     
     class Meta:
         model = RecruiterProfile

@@ -9,7 +9,7 @@ class CandidateProfile(models.Model):
     skills = models.TextField(max_length=500)
     years_experience = models.CharField(max_length=50)
     username = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
+    password = models.TextField(max_length=100)
 
 class RecruiterProfile(models.Model):
 
