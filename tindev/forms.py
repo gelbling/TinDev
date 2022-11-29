@@ -7,18 +7,18 @@ from .models import CreatePost
 class CandidateForm(ModelForm):
 
     name = forms.TextInput()
-    bio = forms.TextInput()
+    #bio = forms.TextInput()
     zip_code = forms.NumberInput()
     skills = forms.TextInput()
-    github = forms.TextInput()
+    #github = forms.TextInput()
     years_experience = forms.NumberInput()
-    education = forms.TextInput()
+    #education = forms.TextInput()
     username = forms.TextInput()
     password = forms.PasswordInput()
 
     class Meta:
         model = CandidateProfile
-        fields = ['name','bio','zip_code','skills','github','years_experience','education','username','password']
+        fields = ['name','zip_code','skills','years_experience','username','password']
         #required = {'name':True,'bio':False,'zip_code':True,'skills':True,'github':False,'years_experience':True,'education':False,'username':True,'password':True}
 
 class RecruiterForm(ModelForm):
