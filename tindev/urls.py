@@ -9,5 +9,6 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('users/', include("django.contrib.auth.urls")),
     path('candidatedashboard/', views.candidateDashboard, name='CandidateDashboard'),
-    path('recruiterdashboard/', views.recruiterDashboard, name='RecruiterDashboard')
+    path('recruiterdashboard/', views.recruiterDashboard, name='RecruiterDashboard'),
+    path('createpost/', views.createPost, name='CreatePost')
 ]

@@ -6,6 +6,8 @@ from tindev.forms import CandidateForm
 from tindev.models import CandidateProfile
 from tindev.forms import RecruiterForm
 from tindev.models import RecruiterProfile
+from tindev.forms import CreatePost
+from tindev.models import CreatePost
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
@@ -65,5 +67,13 @@ def candidateDashboard(request):
 
 def recruiterDashboard(request):
 
-    return render(request, 'tindev/recruiterDashboard.html')  
+    return render(request, 'tindev/recruiterDashboard.html')
+
+def createPost(request):
+    if request.POST:
+        form = CreatePost(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect(recruiterDashboard)
+    return render(request, 'tindev/createPost.html', {'form':CreatePost})   
 	
