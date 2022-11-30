@@ -7,7 +7,6 @@ from tindev.models import CandidateProfile
 from tindev.forms import RecruiterForm
 from tindev.models import RecruiterProfile
 from tindev.forms import CreatePost
-from tindev.models import CreatePost
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
