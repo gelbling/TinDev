@@ -44,16 +44,16 @@
 
         <br>
 
-        <!-- EDIT CODE BELOW TO DISPLAY ALL POSTS ONCE WE HAVE THE FUNCTIONALITY!! -->
-            <!-- <h1>List of all blog posts</h1>
-            #{% if blog_posts %} <ul>
-                {% for post in blog_posts %}
-                    <li><a href="/blog/{{ post.id }}/">
-                        {{ post.title }} by <i> {{post.author_name}} </i> ({{post.pub_date}}) </a></li>
-                {% endfor %} </ul>
-            {% else %}
-                <p>No posts  are available right now.</p>
-            {% endif %} -->
+        <!-- EDIT CODE BELOW TO DISPLAY ALL POSTS, THEY'RE NOT APPEARING FOR SOME REASON -->
+        <h3>Job postings</h3>
+        {% if job_posts %} <ul>
+          {% for post in job_posts %}
+            <li><a href="/tindev/{{ post.position_title }}/">
+              {{ post.position_title }} by <i> {{post.company}} </i> at ({{post.location}) </a></li>
+          {% endfor %} </ul>
+        {% else %}
+          <p>No posts are available right now.</p>
+        {% endif %}
 
 		<!-- Import's Bootstrap JS -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>

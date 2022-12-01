@@ -47,18 +47,19 @@
                     Create a post
                 </button>  
             </a> 
-            <br>
+            <br><br>
             
-            <!-- EDIT CODE BELOW TO DISPLAY ALL POSTS ONCE WE HAVE THE FUNCTIONALITY!! -->
-            <!-- <h1>List of all blog posts</h1>
-            #{% if blog_posts %} <ul>
-                {% for post in blog_posts %}
-                    <li><a href="/blog/{{ post.id }}/">
-                        {{ post.title }} by <i> {{post.author_name}} </i> ({{post.pub_date}}) </a></li>
-                {% endfor %} </ul>
+            <!-- EDIT CODE BELOW TO DISPLAY ALL POSTS, THEY'RE NOT APPEARING FOR SOME REASON -->
+            <h3>Job postings</h3>
+            {% if job_posts %} <ul>
+              {% for post in job_posts %}
+                <li><a href="/tindev/{{ post.position_title }}/">
+                  {{ post.position_title }} by <i> {{post.company}} </i> at ({{post.location}) </a></li>
+              {% endfor %} </ul>
             {% else %}
-                <p>No posts  are available right now.</p>
-            {% endif %} -->
+              <p>No posts are available right now.</p>
+            {% endif %}
+    
         </div>
 
 		<!-- Import's Bootstrap JS -->

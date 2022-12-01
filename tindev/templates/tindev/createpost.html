@@ -15,7 +15,7 @@
 
     </head>
     <body>
-        <h2> Create a Post </h2>
+        <h2 style=text-align:center;> Create a Post </h2>
         <br>
         <form method="POST" action="{% url 'CreatePost' %}" enctype="multipart/form-data">
             {% csrf_token %}
@@ -23,8 +23,8 @@
             <button>
                 Create
             </button>
-            <br>
         </form>
+        <br><br>
 
         <!-- Import's Bootstrap JS -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>

@@ -7,6 +7,7 @@ from tindev.models import CandidateProfile
 from tindev.forms import RecruiterForm
 from tindev.models import RecruiterProfile
 from tindev.forms import CreatePost
+from django.views.generic import ListView, DetailView
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
@@ -74,5 +75,27 @@ def createPost(request):
         if form.is_valid():
             form.save()
         return redirect(recruiterDashboard)
-    return render(request, 'tindev/createPost.html', {'form':CreatePost})   
+    return render(request, 'tindev/createPost.html', {'form':CreatePost})
+
+# Use ListView to display all of the job postings saved within the Django database
+class ViewPostings(ListView):
+
+    # Initialize HTML template name
+    template_name = 'tindev/recruiterDashboard.html'
+
+    # Initialize the reference name for the job posts
+    context_object_name = 'job_posts'
+
+    # Use get_queryset function to order posts by publication date
+    def get_queryset(self):
+        return CreatePost.objects.order_by('expiration_date')
+
+# Use DetailView to display the content and details of the job posts
+class PostContents(DetailView):
+    
+    # Initialize blog
+    model = CreatePost
+
+    # Initialize the HTML template name
+    template_name = 'tindev/recruiterDashboard.html'
 	
