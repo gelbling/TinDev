@@ -74,7 +74,7 @@ def createPost(request):
         if form.is_valid():
             form.save()
         return redirect(recruiterDashboard)
-    return render(request, 'tindev/createPost.html', {'form':CreatePostForm})
+    return render(request, 'tindev/createpost.html', {'form':CreatePostForm})
 
 
 ##########################################################################
