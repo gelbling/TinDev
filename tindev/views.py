@@ -17,7 +17,7 @@ from .models import CreatePost
 
 
 def logout_view(request):
-    logout(request)
+    del request.session["logged_user"]
     messages.info(request, 'You have successfully logged out!')
     return redirect('home')
 
@@ -28,14 +28,29 @@ def user_login(request):
 
         username = request.POST.get('username')
         password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
+        user_type = request.POST.get('profile')
 
-        if user is None:
-            context = {'error':'Invalid username or password'}
-            return render(request, 'tindev/login.html', context)
+        if user_type == 'Candidate':
+            candidate = CandidateProfile.objects.filter(username=username, password=password) 
+            if list(candidate) == 0:
+                context = {'error':'Invalid username or password'}
+                return render(request, 'tindev/login.html', context)   
+            else:
+                request.session["logged_user"] = username
+                request.session["id"] = CandidateProfile.objects.get(username=username).id
+                request.session["role"] = "Candidate"
+                return redirect(candidateDashboard)
 
-        login(request,user)
-        return render(request, 'tindev/home.html')
+        elif user_type == 'Recruiter':
+            recruiter = RecruiterProfile.objects.filter(username=username, password=password)
+            if list(recruiter) == 0:   
+                context = {'error':'Invalid username or password'}
+                return render(request, 'tindev/login.html', context)
+            else:
+                request.session["logged_user"] = username
+                request.session["role"] = "Recruiter"
+                request.session["info"] = info
+                return redirect(recruiterDashboard)
 
     return render(request, 'tindev/login.html')
 
@@ -45,8 +60,6 @@ def candidateProfile(request):
     if request.POST:
         form = CandidateForm(request.POST)
         if form.is_valid():
-            user = User.objects.create_user(username=form.cleaned_data['username'],
-                                 password=form.cleaned_data['password'])
             form.save()
         return redirect(user_login)
     return render(request, 'tindev/candidateProfile.html', {'form':CandidateForm}) 
@@ -57,8 +70,6 @@ def recruiterProfile(request):
     if request.POST:
         form = RecruiterForm(request.POST)
         if form.is_valid():
-            user = User.objects.create_user(username=form.cleaned_data['username'],
-                                 password=form.cleaned_data['password'])
             form.save()
         return redirect(user_login)
     return render(request, 'tindev/recruiterProfile.html', {'form':RecruiterForm}) 
@@ -72,6 +83,7 @@ def createPost(request):
     if request.POST:
         form = CreatePostForm(request.POST)
         if form.is_valid():
+            # recruiter = RecruiterProfile.objects.get(all)
             form.save()
         return redirect(recruiterDashboard)
     return render(request, 'tindev/createpost.html', {'form':CreatePostForm})
@@ -95,6 +107,12 @@ def recruiterDashboard(request):
 
     return render(request, 'tindev/recruiterDashboard.html', {'jobPosts':jobPosts})
 
+def interested(request): # FIX BUT SOMEWHAT THIS
+    candidate_id = request.session["id"]
+    candidate = candidate.objects.get(pk = id)
+    job = job.objects.get(pk = job_id)
+    candidate.interested.add(job)
+    candidate.save()
 
 # Use ListView to display all of the job postings saved within the Django database
 class ViewPostings(ListView):
@@ -118,6 +136,7 @@ class PostContents(DetailView):
 
     # Initialize the HTML template name
     #template_name = 'tindev/recruiterDashboard.html'
+
 
 
 	

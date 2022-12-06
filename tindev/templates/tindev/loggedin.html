@@ -13,8 +13,8 @@
     </head>
     <body>
         <div class="container">
-            {% if user.is_authenticated %}
-                <p style=background-color:#E47EA1;text-align:center>You are logged in as: {{request.user.username}}</p>
+            {% if request.session.logged_user %}
+                <p style=background-color:#E47EA1;text-align:center>You are logged in as: {{request.session.logged_user}}</p>
             {% endif %}
             <div class="row" style=background-color:#E47EA1;>
                 <br>

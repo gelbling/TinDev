@@ -33,7 +33,7 @@
                           <a class="nav-link" href="/recruiterdashboard">Recruiter Dashboard</a>
                         </li>
                       </ul>
-                      {% if user.is_authenticated %}
+                      {% if request.session.logged_user %}
                         <li class="form-inline my-2 my-lg-0 nav-item active ml-auto">
                           <a class="nav-link" href="/logout">Logout</a>
                         </li>
@@ -47,8 +47,8 @@
             <br>
 
 
-            {% if user.is_authenticated %}
-                <p style=background-color:#E47EA1;text-align:center>You are logged in as: {{request.user.username}}</p>
+            {% if request.session.logged_user %}
+                <p style=background-color:#E47EA1;text-align:center>You are logged in as: {{request.session.logged_user}}</p>
             
                 <a href="/createpost">
                   <button style=width:250px;text-align:center;justify-content:center>

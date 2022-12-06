@@ -18,6 +18,15 @@
                     <label for="password"><b>Password</b></label>
                     <input type="password" placeholder="Enter Password" name="password" required>
                     <br>
+                    <label for="username"><b>Select your profile type:</b></label>
+                    <label>
+                    <input type="radio" value="Recruiter" name="profile" required>
+                    Recruiter
+                    </label>
+                    <label>
+                    <input type="radio" value="Candidate" name="profile" required>
+                    Candidate
+                    </label>
                 </div>
 
                 {% if error %}
