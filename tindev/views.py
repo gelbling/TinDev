@@ -6,7 +6,7 @@ from tindev.forms import CandidateForm
 from tindev.models import CandidateProfile
 from tindev.forms import RecruiterForm
 from tindev.models import RecruiterProfile
-from tindev.forms import CreatePost
+from tindev.forms import CreatePostForm
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
@@ -70,11 +70,11 @@ def home(request):
 
 def createPost(request):
     if request.POST:
-        form = CreatePost(request.POST)
+        form = CreatePostForm(request.POST)
         if form.is_valid():
             form.save()
         return redirect(recruiterDashboard)
-    return render(request, 'tindev/createPost.html', {'form':CreatePost})
+    return render(request, 'tindev/createPost.html', {'form':CreatePostForm})
 
 
 ##########################################################################

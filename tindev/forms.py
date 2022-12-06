@@ -33,7 +33,7 @@ class RecruiterForm(ModelForm):
         model = RecruiterProfile
         fields = ['name', 'company', 'zip_code','username','password']
 
-class CreatePost(ModelForm):
+class CreatePostForm(ModelForm):
     
     position_title = forms.TextInput()
     type = forms.TextInput()
