@@ -8,10 +8,18 @@ from tindev.forms import RecruiterForm
 from tindev.models import RecruiterProfile
 from tindev.forms import CreatePost
 from django.views.generic import ListView, DetailView
-from django.contrib.auth import login, authenticate
+from django.contrib import messages
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 
+from .models import CreatePost
+
+
+def logout_view(request):
+    logout(request)
+    messages.info(request, 'You have successfully logged out!')
+    return redirect('home')
 
 
 def user_login(request):
@@ -27,7 +35,7 @@ def user_login(request):
             return render(request, 'tindev/login.html', context)
 
         login(request,user)
-        return render(request, 'tindev/loggedin.html')
+        return render(request, 'tindev/home.html')
 
     return render(request, 'tindev/login.html')
 
@@ -56,18 +64,9 @@ def recruiterProfile(request):
     return render(request, 'tindev/recruiterProfile.html', {'form':RecruiterForm}) 
 
 
-
 def home(request):
-
     return render(request, 'tindev/home.html')
 
-def candidateDashboard(request):
-
-    return render(request, 'tindev/candidateDashboard.html')
-
-def recruiterDashboard(request):
-
-    return render(request, 'tindev/recruiterDashboard.html')
 
 def createPost(request):
     if request.POST:
@@ -76,6 +75,26 @@ def createPost(request):
             form.save()
         return redirect(recruiterDashboard)
     return render(request, 'tindev/createPost.html', {'form':CreatePost})
+
+
+##########################################################################
+####################### DASHBOARDS / VIEWING POSTS #######################
+##########################################################################
+
+
+def candidateDashboard(request):
+
+    jobPosts = CreatePost.objects.all()
+
+    return render(request, 'tindev/candidateDashboard.html', {'jobPosts':jobPosts})
+
+
+def recruiterDashboard(request):
+
+    jobPosts = CreatePost.objects.all()
+
+    return render(request, 'tindev/recruiterDashboard.html', {'jobPosts':jobPosts})
+
 
 # Use ListView to display all of the job postings saved within the Django database
 class ViewPostings(ListView):
@@ -90,6 +109,7 @@ class ViewPostings(ListView):
     def get_queryset(self):
         return CreatePost.objects.order_by('expiration_date')
 
+
 # Use DetailView to display the content and details of the job posts
 class PostContents(DetailView):
     
@@ -97,5 +117,7 @@ class PostContents(DetailView):
     model = CreatePost
 
     # Initialize the HTML template name
-    template_name = 'tindev/recruiterDashboard.html'
+    #template_name = 'tindev/recruiterDashboard.html'
+
+
 	

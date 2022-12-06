@@ -15,9 +15,6 @@
 	<body>
 
         <div class="container">
-            {% if user.is_authenticated %}
-                <p style=background-color:#E47EA1;text-align:center>You are logged in as: {{request.user.username}}</p>
-            {% endif %}
             <div class="row" style=background-color:#E47EA1;>
                 <br>
                 <h1 style=background-color:#E47EA1;text-align:center>Recruiter Dashboard</h1>
@@ -26,7 +23,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                       <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                          <a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
+                          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item-active">
                           <a class="nav-link" href="/candidatedashboard">Candidate Dashboard</a>
@@ -36,28 +33,42 @@
                           <a class="nav-link" href="/recruiterdashboard">Recruiter Dashboard</a>
                         </li>
                       </ul>
-                      <li class="form-inline my-2 my-lg-0 nav-item active ml-auto">
-                        <a class="nav-link" href="/">Logout</a>
-                      </li>
+                      {% if user.is_authenticated %}
+                        <li class="form-inline my-2 my-lg-0 nav-item active ml-auto">
+                          <a class="nav-link" href="/logout">Logout</a>
+                        </li>
+                      {% else %}
+                        <li class="form-inline my-2 my-lg-0 nav-item active ml-auto">
+                          <a class="nav-link" href="/login">Login</a>
+                        </li>
+                      {% endif %}
                 </nav>
             </div>
             <br>
-            <a href="/createpost">
-                <button style=width:250px;text-align:center;justify-content:center>
-                    Create a post
-                </button>  
-            </a> 
-            <br><br>
+
+
+            {% if user.is_authenticated %}
+                <p style=background-color:#E47EA1;text-align:center>You are logged in as: {{request.user.username}}</p>
             
-            <!-- EDIT CODE BELOW TO DISPLAY ALL POSTS, THEY'RE NOT APPEARING FOR SOME REASON -->
-            <h3>Job postings</h3>
-            {% if job_posts %} <ul>
-              {% for post in job_posts %}
-                <li><a href="/tindev/{{ post.position_title }}/">
-                  {{ post.position_title }} by <i> {{post.company}} </i> at ({{post.location}) </a></li>
-              {% endfor %} </ul>
+                <a href="/createpost">
+                  <button style=width:250px;text-align:center;justify-content:center>
+                      Create a post
+                  </button>  
+                </a> 
+
+                <!-- EDIT CODE BELOW TO DISPLAY ALL POSTS, THEY'RE NOT APPEARING FOR SOME REASON -->
+                <h3>Job postings</h3>
+                {% if jobPosts %} <ul>
+                  {% for post in jobPosts %}
+                    <li><a href="/tindev/{{ post.position_title }}/">
+                      {{ post.position_title }} by <i> {{post.company}} </i> at ({{post.location}) </a></li>
+                  {% endfor %} </ul>
+                {% else %}
+                  <p>No posts are available right now.</p>
+            {% endif %}
+            
             {% else %}
-              <p>No posts are available right now.</p>
+              <p style=background-color:#E47EA1;text-align:center>You are not logged in.</p>
             {% endif %}
     
         </div>
