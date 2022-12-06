@@ -2,18 +2,13 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
-from tindev.forms import CandidateForm
-from tindev.models import CandidateProfile
-from tindev.forms import RecruiterForm
-from tindev.models import RecruiterProfile
-from tindev.forms import CreatePostForm
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
-
-from .models import CreatePost
+from tindev.forms import CandidateForm, RecruiterForm, CreatePostForm
+from tindev.models import CandidateProfile, RecruiterProfile, CreatePost
 
 
 def logout_view(request):
@@ -49,7 +44,7 @@ def user_login(request):
             else:
                 request.session["logged_user"] = username
                 request.session["role"] = "Recruiter"
-                request.session["info"] = info
+                request.session["id"] = RecruiterProfile.objects.get(username=username).id
                 return redirect(recruiterDashboard)
 
     return render(request, 'tindev/login.html')
@@ -83,7 +78,6 @@ def createPost(request):
     if request.POST:
         form = CreatePostForm(request.POST)
         if form.is_valid():
-            # recruiter = RecruiterProfile.objects.get(all)
             form.save()
         return redirect(recruiterDashboard)
     return render(request, 'tindev/createpost.html', {'form':CreatePostForm})

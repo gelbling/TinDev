@@ -3,6 +3,8 @@ from django import forms
 from .models import CandidateProfile
 from .models import RecruiterProfile
 from .models import CreatePost
+from django.shortcuts import render
+
 
 class CandidateForm(ModelForm):
 
@@ -41,8 +43,10 @@ class CreatePostForm(ModelForm):
     preferred_skills = forms.TextInput()
     description = forms.TextInput()
     company = forms.TextInput()
-    expiration_date = forms.DateTimeInput()
-    inactive_date = forms.DateTimeInput()
+    #expiration_date = forms.DateTimeInput()
+    #inactive_date = forms.DateTimeInput()
+    expiration_date = forms.TextInput()
+    inactive_date = forms.TextInput()
     is_active = forms.CheckboxInput()
 
     class Meta:

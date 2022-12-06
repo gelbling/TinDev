@@ -24,8 +24,10 @@ class CreatePost(models.Model):
     preferred_skills = models.CharField(max_length=100)
     description = models.TextField(max_length=500) 
     company = models.CharField(max_length=100)
-    expiration_date = models.DateTimeField('Expiration Date (''DD/MM/YEAR)')
-    inactive_date = models.DateTimeField('Inactive Date (''DD/MM/YEAR)')
+    #expiration_date = models.DateField('Expiration Date (''YEAR/MM/DD)')
+    #inactive_date = models.DateField('Inactive Date (''YEAR/MM/DD)')
+    expiration_date = models.CharField(max_length=100)
+    inactive_date = models.CharField(max_length=100)
     is_active = models.BooleanField() # ADD LOGIC TO MAKE THIS INACTIVE ON DATE
 
     def __str__(self):
