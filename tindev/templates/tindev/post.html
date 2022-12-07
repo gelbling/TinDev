@@ -22,10 +22,8 @@
             <p>{{ post.description }}</p>
         </body>
 
-        <form action="" method="POST">
-            <button type="submit"> INTERESTED IN POSITION </button>
-            <input type="hidden" name="job_id" value = {{post.id}}>
-        </form>
+        <button type="submit" value='' onclick="location.href='{% url 'interested' %}'" name='mybtn2'>INTERESTED IN THIS POSITION</button>
+
 
     </html>
 {% endblock %}

@@ -43,7 +43,8 @@ class CandidateProfile(models.Model):
     #education = models.CharField(max_length=50)
     username = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
-    interested = models.ManyToManyField(CreatePost)
+
+    interested = models.ManyToManyField(CreatePost, null=True, blank=True)
 
     def __str__(self):
         return self.name

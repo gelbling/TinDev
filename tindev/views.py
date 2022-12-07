@@ -89,6 +89,15 @@ def createPost(request):
 ####################### DASHBOARDS / VIEWING POSTS #######################
 ##########################################################################
 
+def interestedPositions(request):
+
+    return render(request, 'tindev/interested.html')
+
+
+def offers(request):
+
+    return render(request, 'tindev/offers.html')
+
 
 def candidateDashboard(request):
 
@@ -103,12 +112,22 @@ def recruiterDashboard(request):
 
     return render(request, 'tindev/recruiterDashboard.html', {'jobPosts':jobPosts})
 
-def interested(request): # FIX BUT SOMEWHAT THIS
+
+def interested(request): 
+    # get candidate
     candidate_id = request.session["id"]
-    candidate = candidate.objects.get(pk = id)
-    job = job.objects.get(pk = job_id)
+    candidate = CandidateProfile.objects.get(pk = candidate_id)
+
+    # get job
+    job_id = request.session.get('posts_id')
+    job = CreatePost.objects.get(pk = job_id)
+
+    # add job to candidate profile (many-to-many relationship)
     candidate.interested.add(job)
     candidate.save()
+
+    # redirect to candidate profile
+    return redirect(candidateDashboard)
 
 # Use ListView to display all of the job postings saved within the Django database
 class ViewPostings(ListView):
@@ -134,6 +153,7 @@ class PostContents(DetailView):
 
 def detail(request, post_id):
     post = CreatePost.objects.get(pk=post_id) # get post objects for specific blog entry
+    request.session['posts_id'] = post_id
     return render(request, 'tindev/post.html', {'post': post}) # route to results html page 
     
 
