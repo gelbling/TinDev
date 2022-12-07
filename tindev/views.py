@@ -180,9 +180,20 @@ def editPost(request, post_id):
 
     return render(request, 'tindev/editPost.html', {'form':form})
 
+
+
 def deletePost(request, post_id):
 
     post = CreatePost.objects.get(id=post_id)
     post.delete()
 
     return redirect(recruiterDashboard)
+
+
+def makeOffer(request, post_id):
+
+    for i in CandidateProfile.objects.get(username='mari').interested.all():
+        if str(CreatePost.objects.get(id=post_id).position_title) == str(i):
+            print(i)
+
+    return render(request, 'tindev/makeOffer.html')
