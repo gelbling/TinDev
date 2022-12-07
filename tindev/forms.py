@@ -3,6 +3,7 @@ from django import forms
 from .models import CandidateProfile
 from .models import RecruiterProfile
 from .models import CreatePost
+from .models import Offers
 from django.shortcuts import render
 from crispy_forms.helper import FormHelper
 from django.forms.widgets import DateInput
@@ -49,3 +50,12 @@ class CreatePostForm(ModelForm):
     class Meta:
         model = CreatePost
         fields = ['position_title','type','location','preferred_skills','description', 'company', 'expiration_date']
+
+class OffersForm(ModelForm):
+    
+    salary = forms.TextInput()
+    due_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
+
+    class Meta:
+        model = Offers
+        fields = ['salary','due_date']

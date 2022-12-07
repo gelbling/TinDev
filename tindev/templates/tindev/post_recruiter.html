@@ -75,12 +75,10 @@
              <br>
             </div>
             <div>
-            <form action="{% url 'interested' %}" method="post">
             {% csrf_token %}
             <a href="/{{ post.id }}/change">[EDIT POST]</a><br>
             <a href="/{{ post.id }}/delete">[DELETE POST]</a><br>
-            <a href="/{{ post.id }}/offer">[MAKE OFFER]</a>
-            </form>
+            <a href="/{{ post.id }}/makeOffer">[MAKE OFFER]</a>
             </div>
     
     

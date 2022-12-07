@@ -7,8 +7,8 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
-from tindev.forms import CandidateForm, RecruiterForm, CreatePostForm
-from tindev.models import CandidateProfile, RecruiterProfile, CreatePost
+from tindev.forms import CandidateForm, RecruiterForm, CreatePostForm, OffersForm
+from tindev.models import CandidateProfile, RecruiterProfile, CreatePost, Offers
 import datetime
 
 
@@ -236,9 +236,17 @@ def deletePost(request, post_id):
 
 
 def makeOffer(request, post_id):
+    interested = CandidateProfile.objects.filter(interested__id=post_id)
 
-    for i in CandidateProfile.objects.get(username='mari').interested.all():
-        if str(CreatePost.objects.get(id=post_id).position_title) == str(i):
-            print(i)
+    if request.POST:
+        form = OffersForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect(user_login)
+    return render(request, 'tindev/makeOffer.html', {'form':OffersForm, "interested":interested})
 
-    return render(request, 'tindev/makeOffer.html')
+def passOffer(request, post_id):
+
+    print('hi')
+
+    return render(request, 'tindev/home.html')
