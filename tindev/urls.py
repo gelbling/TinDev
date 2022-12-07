@@ -11,5 +11,6 @@ urlpatterns = [
     path('candidatedashboard/', views.candidateDashboard, name='CandidateDashboard'),
     path('recruiterdashboard/', views.recruiterDashboard, name='RecruiterDashboard'),
     path('createpost/', views.createPost, name='CreatePost'),
-    path('logout/', views.logout_view, name='logout')
+    path('logout/', views.logout_view, name='logout'),
+    path('<int:post_id>/', views.detail, name='detail')
 ]

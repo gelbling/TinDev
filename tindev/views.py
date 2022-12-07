@@ -114,7 +114,7 @@ def interested(request): # FIX BUT SOMEWHAT THIS
 class ViewPostings(ListView):
 
     # Initialize HTML template name
-    template_name = 'tindev/recruiterDashboard.html'
+    template_name = 'tindev/post.html'
 
     # Initialize the reference name for the job posts
     context_object_name = 'job_posts'
@@ -126,12 +126,16 @@ class ViewPostings(ListView):
 
 # Use DetailView to display the content and details of the job posts
 class PostContents(DetailView):
-    
     # Initialize blog
     model = CreatePost
-
+    
     # Initialize the HTML template name
-    #template_name = 'tindev/recruiterDashboard.html'
+    template_name = 'tindev/post.html'
+
+def detail(request, post_id):
+    post = CreatePost.objects.get(pk=post_id) # get post objects for specific blog entry
+    return render(request, 'tindev/post.html', {'post': post}) # route to results html page 
+    
 
 
 

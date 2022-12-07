@@ -1,7 +1,31 @@
 <!-- EACH INDIVIDUAL POST SIMILAT TO HW -->
 
 <!-- THIS IS NOT RIGHT BUT SOMEWHAT SIMMILAR TO  -->
-<form action="" method="POST">
-    <button type="submit"> INTERESTED IN POSITION </button>
-    <input type="hidden" name="job_id" value = {{post.id}}>
-</form>
+{% extends  'tindev/base.html' %}
+
+{% block main %}
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <title>{{ post.position_title }}</title>
+        </head>
+        <body>
+            <h1>{{ post.position_title }}</h1>
+            <h3>Author: {{ post.type }}</h2>
+            <h3>Location: {{ post.location }}</h3>
+            <h2>Company:  {{ post.company }}</h2>
+            <h1>preferred_skills:  {{ post.preferred_skills }}</h1>
+            <p>expiration_date: {{ post.expiration_date }}</p>
+            <p>inactive_date: {{ post.inactive_date }}</p>
+            <br>
+            <p>{{ post.description }}</p>
+        </body>
+
+        <form action="" method="POST">
+            <button type="submit"> INTERESTED IN POSITION </button>
+            <input type="hidden" name="job_id" value = {{post.id}}>
+        </form>
+
+    </html>
+{% endblock %}

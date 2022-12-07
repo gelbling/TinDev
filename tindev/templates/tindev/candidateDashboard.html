@@ -52,7 +52,7 @@
             <h3>Job postings</h3>
             {% if jobPosts %} <ul>
               {% for post in jobPosts %}
-                <li><a href="/tindev/{{ post.position_title }}/">
+                <li><a href="/{{ post.id }}/">
                   {{ post.position_title }} by <i> {{post.company}} </i> in {{post.location}} </a></li>
               {% endfor %} </ul>
             {% else %}
