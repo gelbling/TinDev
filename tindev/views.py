@@ -91,8 +91,13 @@ def createPost(request):
 
 def interestedPositions(request):
 
-    return render(request, 'tindev/interested.html')
+    # get current profile from database
+    candidate_id = request.session['id']
+    candidate_object = CandidateProfile.objects.get(pk = candidate_id)
 
+    interested_jobs = candidate_object.interested.all()
+
+    return render(request, 'tindev/interested.html', {'interested_jobs':interested_jobs})
 
 def offers(request):
 
@@ -108,12 +113,16 @@ def candidateDashboard(request):
 
 def recruiterDashboard(request):
 
-    jobPosts = CreatePost.objects.all()
+    jobPosts = CreatePost.objects.filter(recruiter=request.session['id'])
 
     return render(request, 'tindev/recruiterDashboard.html', {'jobPosts':jobPosts})
 
 
 def interested(request): 
+
+    if request.POST.get('submit') == 2:
+        return redirect(candidateDashboard)
+
     # get candidate
     candidate_id = request.session["id"]
     candidate = CandidateProfile.objects.get(pk = candidate_id)
@@ -157,6 +166,16 @@ def detail(request, post_id):
     return render(request, 'tindev/post.html', {'post': post}) # route to results html page 
     
 
+def editPost(request, post_id):
 
+    post = CreatePost.objects.get(id=post_id)
 
-	
+    if request.method == 'POST':
+        form = CreatePostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect(recruiterDashboard)
+    else:
+        form = CreatePostForm(instance=post)
+
+    return render(request, 'tindev/editPost.html', {'form':form})
