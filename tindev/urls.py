@@ -18,7 +18,7 @@ urlpatterns = [
     path('offers/', views.offers, name='Offers'),
     path('<int:post_id>/change/', views.editPost, name='change'),
     path('<int:post_id>/delete/', views.deletePost, name='delete'),
-    path('<int:post_id>/makeOffer/', views.makeOffer, name='makeOffer'),
-    path('/', views.passOffer, name='passOffer')
+    path('<int:post_id>/makeOffer/', views.makeoffer, name='makeofferaction')
+    #path('<int:post_id>/passOffer/', views.passOffer, name='passOffer')
 
 ]

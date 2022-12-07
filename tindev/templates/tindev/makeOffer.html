@@ -17,10 +17,21 @@
     <body>
         <h2 style=text-align:center;> Make an Offer </h2>
         <br>
-        <form method="POST" action="{% url 'passOffer' %}" enctype="multipart/form-data">
+        <form method="POST" action="{{ views.makeoffer }}" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form|crispy }}
-            {{interested}}
+            {% if interested %}
+                <p>Interested candidates: </p>
+                {% for interest in interested %}
+                    <label>
+                    <input type="radio" value="{{ interest.name }}" name="candidates" required>
+                    {{ interest.name }}
+                    </label>
+                    <br>
+                {% endfor %}
+                {% else %}
+                    <p>Job has no interested candidates...</p>
+            {% endif %}
             <button type = "submit">
                 Submit Offer
             </button>

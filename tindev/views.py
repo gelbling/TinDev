@@ -192,15 +192,18 @@ class PostContents(DetailView):
     # Initialize the HTML template name
     template_name = 'tindev/post.html'
 
+
 def detail(request, post_id):
     post = CreatePost.objects.get(pk=post_id) # get post objects for specific blog entry
     request.session['posts_id'] = post_id
     return render(request, 'tindev/post.html', {'post': post}) # route to results html page 
 
+
 def detail_r(request, post_id):
     post = CreatePost.objects.get(pk=post_id) # get post objects for specific blog entry
     request.session['posts_id'] = post_id
     return render(request, 'tindev/post_recruiter.html', {'post': post}) # route to results html page 
+
 
 def editPost(request, post_id):
 
@@ -235,18 +238,19 @@ def deletePost(request, post_id):
     return redirect(recruiterDashboard)
 
 
-def makeOffer(request, post_id):
+def makeoffer(request, post_id):
+
     interested = CandidateProfile.objects.filter(interested__id=post_id)
 
     if request.POST:
         form = OffersForm(request.POST)
         if form.is_valid():
-            form.save()
-        return redirect(user_login)
-    return render(request, 'tindev/makeOffer.html', {'form':OffersForm, "interested":interested})
-
-def passOffer(request, post_id):
-
-    print('hi')
-
-    return render(request, 'tindev/home.html')
+            job = form.save(commit=False)
+            name = str(request.POST.get('candidates'))
+            user_name = CandidateProfile.objects.get(name=name).username
+            job.candidate = CandidateProfile.objects.get(username=user_name)
+            job.job = CreatePost.objects.get(id=post_id)
+            job.save()
+        return redirect(recruiterDashboard)
+    
+    return render(request, 'tindev/makeoffer.html', {'form':OffersForm, "interested":interested, 'jobID':post_id})

@@ -55,6 +55,8 @@ class OffersForm(ModelForm):
     
     salary = forms.TextInput()
     due_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
+    #candidate = forms.TextInput()
+    #job = forms.TextInput()
 
     class Meta:
         model = Offers
