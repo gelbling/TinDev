@@ -16,7 +16,6 @@ class RecruiterProfile(models.Model):
 class CreatePost(models.Model):
 
     recruiter = models.ForeignKey(RecruiterProfile, on_delete=models.CASCADE)
-    
     ## IN SOME WAY ADD AN ID TO BE LATER TO EDIT AND DELETE POSTS IN LATER FEATURES
     position_title = models.CharField(max_length=100)
     type = models.CharField(max_length=100)

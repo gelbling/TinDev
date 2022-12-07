@@ -78,7 +78,9 @@ def createPost(request):
     if request.POST:
         form = CreatePostForm(request.POST)
         if form.is_valid():
-            form.save()
+            job = form.save(commit=False)
+            job.recruiter = RecruiterProfile.objects.get(username=request.session["logged_user"])
+            job.save()
         return redirect(recruiterDashboard)
     return render(request, 'tindev/createpost.html', {'form':CreatePostForm})
 
