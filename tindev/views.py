@@ -27,8 +27,8 @@ def user_login(request):
 
         if user_type == 'Candidate':
             candidate = CandidateProfile.objects.filter(username=username, password=password) 
-            if list(candidate) == 0:
-                context = {'error':'Invalid username or password'}
+            if len(list(candidate)) == 0:
+                context = {'error':'Invalid username, password or position'}
                 return render(request, 'tindev/login.html', context)   
             else:
                 request.session["logged_user"] = username
@@ -38,14 +38,17 @@ def user_login(request):
 
         elif user_type == 'Recruiter':
             recruiter = RecruiterProfile.objects.filter(username=username, password=password)
-            if list(recruiter) == 0:   
-                context = {'error':'Invalid username or password'}
+            if len(list(recruiter)) == 0:   
+                context = {'error':'Invalid username, password or position'}
                 return render(request, 'tindev/login.html', context)
             else:
                 request.session["logged_user"] = username
                 request.session["role"] = "Recruiter"
                 request.session["id"] = RecruiterProfile.objects.get(username=username).id
                 return redirect(recruiterDashboard)
+        else:
+            context = {'error':'Must select a user_type'}
+            return render(request, 'tindev/login.html', context)
 
     return render(request, 'tindev/login.html')
 
@@ -119,24 +122,41 @@ def recruiterDashboard(request):
 
 
 def interested(request): 
+    if request.POST:
 
-    if request.POST.get('submit') == 2:
-        return redirect(candidateDashboard)
+        interested_val = request.POST.get("interested_val")
+        if interested_val == '2':
+            # get candidate
+            candidate_id = request.session["id"]
+            candidate = CandidateProfile.objects.get(pk = candidate_id)
 
-    # get candidate
-    candidate_id = request.session["id"]
-    candidate = CandidateProfile.objects.get(pk = candidate_id)
+            # get job
+            job_id = request.session.get('posts_id')
+            job = CreatePost.objects.get(pk = job_id)
 
-    # get job
-    job_id = request.session.get('posts_id')
-    job = CreatePost.objects.get(pk = job_id)
+            # add job to candidate profile (many-to-many relationship)
+            candidate.interested.remove(job)
+            candidate.save()
 
-    # add job to candidate profile (many-to-many relationship)
-    candidate.interested.add(job)
-    candidate.save()
+            # redirect to candidate profile
+            return redirect(candidateDashboard)
+        else:
+            # get candidate
+            candidate_id = request.session["id"]
+            candidate = CandidateProfile.objects.get(pk = candidate_id)
 
-    # redirect to candidate profile
-    return redirect(candidateDashboard)
+            # get job
+            job_id = request.session.get('posts_id')
+            job = CreatePost.objects.get(pk = job_id)
+
+            # add job to candidate profile (many-to-many relationship)
+            candidate.interested.add(job)
+            candidate.save()
+
+            # redirect to candidate profile
+            return redirect(candidateDashboard)
+    else:
+        return redirect(recruiterDashboard)
 
 # Use ListView to display all of the job postings saved within the Django database
 class ViewPostings(ListView):

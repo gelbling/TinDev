@@ -15,6 +15,11 @@
 	<body>
 
         <div class="container">
+            {% if request.session.logged_user %}
+              <p style=background-color:#E47EA1;text-align:center>You are logged in as: {{request.session.logged_user}}</p>
+            {% else %}
+              <p style=background-color:#E47EA1;text-align:center>You are not logged in.</p>
+            {% endif %}
             <div class="row" style=background-color:#E47EA1;>
                 <br>
                 <h1 style=background-color:#E47EA1;text-align:center>Recruiter Dashboard</h1>
@@ -45,7 +50,6 @@
 
 
             {% if request.session.logged_user %}
-                <p style=background-color:#E47EA1;text-align:center>You are logged in as: {{request.session.logged_user}}</p>
             
                 <a href="/createpost">
                   <button style=width:250px;text-align:center;justify-content:center>

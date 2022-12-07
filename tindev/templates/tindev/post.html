@@ -7,24 +7,85 @@
     <!DOCTYPE html>
     <html>
         <head>
+
             <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
             <title>{{ post.position_title }}</title>
+            <!-- Add Bootstrap CSS -->
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
         </head>
         <body>
-            <h1>{{ post.position_title }}</h1>
-            <h3>Author: {{ post.type }}</h2>
-            <h3>Location: {{ post.location }}</h3>
-            <h2>Company:  {{ post.company }}</h2>
-            <h1>preferred_skills:  {{ post.preferred_skills }}</h1>
-            <p>expiration_date: {{ post.expiration_date }}</p>
-            <p>inactive_date: {{ post.inactive_date }}</p>
-            <br>
-            <p>{{ post.description }}</p>
+            <div class="container">
+                {% if request.session.logged_user %}
+                    <p style=background-color:#E47EA1;text-align:center>You are logged in as: {{request.session.logged_user}}</p>
+                {% else %}
+                    <p style=background-color:#E47EA1;text-align:center>You are not logged in.</p>
+                {% endif %}
+                <div class="row" style=background-color:#E47EA1;>
+                    <br>
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light">          
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                          <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                              <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+                            </li>
+                            {% if request.session.logged_user %}
+                              {% if request.session.role == "Candidate" %}
+                              <li class="nav-item active">
+                                <a class="nav-link" href="/candidatedashboard">Candidate Dashboard</a>
+                              </li>
+                              {% endif %}
+                              </li>
+                              {% if request.session.role == "Recruiter" %}
+                              <li class="nav-item active">
+                                <a class="nav-link" href="/recruiterdashboard">Recruiter Dashboard</a>
+                              </li>
+                              {% endif %}
+                          </ul>
+                          <li class="form-inline my-2 my-lg-0 nav-item active ml-auto">
+                            <a class="nav-link" href="/logout">Logout</a>
+                          </li>
+                        {% else %}
+                          </ul>
+                          <li class="form-inline my-2 my-lg-0 nav-item active ml-auto">
+                            <a class="nav-link" href="/login">Login</a>
+                          </li>
+                        {% endif %}
+                      </nav>
+                </div>
+                <br>
+                <div class="row" style=background-color:#F3BACC;>
+                    <div class="col-12">
+                       <br>
+                        <h2 class="aboutTinDev" style=text-align:center;>{{ post.position_title }}</h2>
+                        <h5  class="aboutTinDev" style=text-align:left;>Position: {{ post.type }}</h5>
+                        <h5  class="aboutTinDev" style=text-align:left;>Location: {{ post.location }}</h5>
+                        <h5  class="aboutTinDev" style=text-align:left;>Company:  {{ post.company }}</h5>
+                        <p class="aboutTinDev" style=text-align:left;>Preferred Skills:  {{ post.preferred_skills }}</p>
+                        <p>Expiration Date: {{ post.expiration_date }}</p>
+                        <br>
+                        <p class="aboutTinDev" style=text-align:center;font-family:monospace>{{ post.description }}</p>
+                        
+                        <br>
+                    </div>
+                </div>
+    
+             <br>
+            </div>
+    
+            <!-- Import's Bootstrap JS -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+        
         </body>
+        <div>
+          <form action="{% url 'interested' %}" method="post">
+          {% csrf_token %}
+          <button type="submit"  name="interested_val" value="1" onclick="location.href='{% url 'interested' %}'" name='mybtn2'>INTERESTED</button>
+          <button type="submit" name="interested_val" value="2" onclick="location.href='{% url 'interested' %}'" name='mybtn3'>NOT INTERESTED</button>
 
-        <button type="submit" value='1' onclick="location.href='{% url 'interested' %}'" name='mybtn2'>INTERESTED</button>
-        <button type="submit" value='2' onclick="location.href='{% url 'interested' %}'" name='mybtn3'>NOT INTERESTED</button>
-
+          </form>
+          </div>
 
     </html>
 {% endblock %}
