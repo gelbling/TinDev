@@ -179,3 +179,10 @@ def editPost(request, post_id):
         form = CreatePostForm(instance=post)
 
     return render(request, 'tindev/editPost.html', {'form':form})
+
+def deletePost(request, post_id):
+
+    post = CreatePost.objects.get(id=post_id)
+    post.delete()
+
+    return redirect(recruiterDashboard)
