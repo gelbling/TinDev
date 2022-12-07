@@ -60,7 +60,7 @@
                 <h3>{{request.session.logged_user}}'s Posted Jobs</h3>
                 {% if jobPosts %} <ul>
                   {% for post in jobPosts %}
-                    <li><a href="/{{ post.id }}">
+                    <li><a href="/{{ post.id }}/r">
                       {{ post.position_title }} by <i> {{post.company}} </i> at {{post.location}} </a> - <a href="/{{ post.id }}/change">[EDIT POST]</a> - <a href="/{{ post.id }}/delete">[DELETE POST]</a> - <a href="/{{ post.id }}/offer">[MAKE OFFER]</a></li>
                   {% endfor %} </ul>
                 {% else %}

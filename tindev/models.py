@@ -23,7 +23,7 @@ class CreatePost(models.Model):
     description = models.TextField(max_length=500) 
     company = models.CharField(max_length=100)
     expiration_date = models.DateField( )
-    is_active = models.BooleanField(default = True) # ADD LOGIC TO MAKE THIS INACTIVE ON DATE
+    is_active = models.BooleanField(default = True, choices=[('False', 'False'), ('True', 'True')]) # ADD LOGIC TO MAKE THIS INACTIVE ON DATE
 
     def __str__(self):
         return self.position_title

@@ -74,19 +74,20 @@
     
              <br>
             </div>
+            <div>
+            <form action="{% url 'interested' %}" method="post">
+            {% csrf_token %}
+            <a href="/{{ post.id }}/change">[EDIT POST]</a><br>
+            <a href="/{{ post.id }}/delete">[DELETE POST]</a><br>
+            <a href="/{{ post.id }}/offer">[MAKE OFFER]</a>
+            </form>
+            </div>
+    
     
             <!-- Import's Bootstrap JS -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
         
         </body>
-        <div>
-          <form action="{% url 'interested' %}" method="post">
-          {% csrf_token %}
-          <button type="submit"  name="interested_val" value="1" name='mybtn2'>INTERESTED</button>
-          <button type="submit" name="interested_val" value="2" name='mybtn3'>NOT INTERESTED</button>
-
-          </form>
-          </div>
-
+  
     </html>
 {% endblock %}

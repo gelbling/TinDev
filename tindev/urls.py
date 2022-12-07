@@ -12,6 +12,7 @@ urlpatterns = [
     path('createpost/', views.createPost, name='CreatePost'),
     path('logout/', views.logout_view, name='logout'),
     path('<int:post_id>/', views.detail, name='detail'),
+    path('<int:post_id>/r/', views.detail_r, name='detail_r'),
     path('interested/', views.interested, name='interested'),
     path('interestedpositions/', views.interestedPositions, name='InterestedPositions'),
     path('offers/', views.offers, name='Offers'),

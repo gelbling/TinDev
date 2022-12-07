@@ -9,6 +9,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from tindev.forms import CandidateForm, RecruiterForm, CreatePostForm
 from tindev.models import CandidateProfile, RecruiterProfile, CreatePost
+import datetime
 
 
 def logout_view(request):
@@ -45,6 +46,17 @@ def user_login(request):
                 request.session["logged_user"] = username
                 request.session["role"] = "Recruiter"
                 request.session["id"] = RecruiterProfile.objects.get(username=username).id
+
+                jobPosts = CreatePost.objects.filter(recruiter=request.session['id'])
+
+                for i in jobPosts:
+                    if i.expiration_date < datetime.date.today():
+                        i.is_active = 'False'
+                        i.save()
+                    else:
+                        i.is_active = 'True'
+                        i.save()
+                
                 return redirect(recruiterDashboard)
         else:
             context = {'error':'Must select a user_type'}
@@ -184,7 +196,11 @@ def detail(request, post_id):
     post = CreatePost.objects.get(pk=post_id) # get post objects for specific blog entry
     request.session['posts_id'] = post_id
     return render(request, 'tindev/post.html', {'post': post}) # route to results html page 
-    
+
+def detail_r(request, post_id):
+    post = CreatePost.objects.get(pk=post_id) # get post objects for specific blog entry
+    request.session['posts_id'] = post_id
+    return render(request, 'tindev/post_recruiter.html', {'post': post}) # route to results html page 
 
 def editPost(request, post_id):
 
@@ -194,7 +210,16 @@ def editPost(request, post_id):
         form = CreatePostForm(request.POST, instance=post)
         if form.is_valid():
             form.save()
-            return redirect(recruiterDashboard)
+        jobPosts = CreatePost.objects.filter(recruiter=request.session['id'])
+
+        for i in jobPosts:
+            if i.expiration_date < datetime.date.today():
+                i.is_active = 'False'
+                i.save()
+            else:
+                i.is_active = 'True'
+                i.save()
+        return redirect(recruiterDashboard)
     else:
         form = CreatePostForm(instance=post)
 
