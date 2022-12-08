@@ -166,9 +166,40 @@ def candidateDashboard(request):
 
 def recruiterDashboard(request):
 
+    if request.POST:
+        search = request.POST.get("search")
+        if search == 'inactive-posts':
+            jobPosts = CreatePost.objects.filter(recruiter=request.session['id'])
+            post = jobPosts.filter(is_active = False)
+            return render(request, 'tindev/recruiterDashboard.html', {'jobPosts':post, 'searchTerm':search})
+        elif search == 'active-posts':
+            jobPosts = CreatePost.objects.filter(recruiter=request.session['id'])
+
+            post = jobPosts.filter(is_active = True)
+
+            return render(request, 'tindev/recruiterDashboard.html', {'jobPosts':post, 'searchTerm':search})
+        elif search == 'interested-candidates-posts':
+            jobPosts = CreatePost.objects.filter(recruiter=request.session['id'])
+            posts = {}
+            postName = 'post'
+            for job in jobPosts:
+                postName = 'post'
+                if (CandidateProfile.objects.filter(interested__id = job.id)):
+                    postName = postName + str(job.id)
+                    posts[postName] = job
+
+            totalInterested = len(posts)
+
+            return render(request, 'tindev/recruiterDashboard.html', {'jobPosts':posts, 'searchTerm':search})
+        else:
+            jobPosts = CreatePost.objects.filter(recruiter=request.session['id'])
+           
+            return render(request, 'tindev/recruiterDashboard.html', {'jobPosts':jobPosts, 'searchTerm':search})
+
+    search = "all-posts"
     jobPosts = CreatePost.objects.filter(recruiter=request.session['id'])
 
-    return render(request, 'tindev/recruiterDashboard.html', {'jobPosts':jobPosts})
+    return render(request, 'tindev/recruiterDashboard.html', {'jobPosts':jobPosts, 'searchTerm':search})
 
 
 def interested(request): 

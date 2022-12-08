@@ -21,4 +21,5 @@ urlpatterns = [
     path('<int:post_id>/makeOffer/', views.makeoffer, name='makeofferaction'),
     path('offerdecision/<int:post_id>/', views.offerDecision, name='offerdecision')
 
+
 ]

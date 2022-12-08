@@ -1,4 +1,5 @@
 {% extends  'tindev/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block main %}
     <!doctype html>
@@ -57,31 +58,49 @@
                   </button>  
                 </a> 
 
+                <br>
+                <br>
+
                 <h3>{{request.session.logged_user}}'s Posted Jobs</h3>
 
-                <script>
-                  function filter(){
-                    let currFilter = document.getElementsById("search");
-                    
-                  }
-                </script>
+                <br>
+                
+                <form method="POST" action="{{ views.recruiterDashboard }}" enctype="multipart/form-data">
 
-                <select name="search" id="search">
-                  <option value="all-posts">All Posts</option>
-                  <option value="active">Active Posts</option>
-                  <option value="inactive">Inactive Posts</option>
-                  <option value="have-interests">Have Interests</option>
-                </select>
+                  {% csrf_token %}
+                  {{ form|crispy }}
+
+                  <select name="search" id="search" onchange="this.form.submit()" >
+                    <option value="all-posts"  >All Posts</option>
+                    <option value="active-posts" >Active Posts</option>
+                    <option value="inactive-posts" >Inactive Posts</option>
+                    <option value="interested-candidates-posts" >Have Interests</option>
+                  </select>
+                </form>
+
+
+                <p>You're searching for: {{ searchTerm }}</p>
 
                 <div class="postSearch">
 
-                {% if jobPosts %} <ul>
-                  {% for post in jobPosts %}
-                    <li><a href="/{{ post.id }}/r">
-                      {{ post.position_title }} by <i> {{post.company}} </i> at {{post.location}} </a> - <a href="/{{ post.id }}/change">[EDIT POST]</a> - <a href="/{{ post.id }}/delete">[DELETE POST]</a> - <a href="/{{ post.id }}/makeOffer">[MAKE OFFER]</a></li>
-                  {% endfor %} </ul>
+                {% if searchTerm == 'interested-candidates-posts' %}
+
+                {% for key, value in jobPosts.items %}
+                <li>
+                  <a href="/{{ post.id }}/r">{{ value.position_title }} by <i> {{value.company}} </i> at {{value.location}} </a> - <a href="/{{ value.id }}/change">[EDIT POST]</a> - <a href="/{{ value.id }}/delete">[DELETE POST]</a> - <a href="/{{ value.id }}/makeOffer">[MAKE OFFER]</a>
+                </li>
+                {% endfor %}
+
+                  
                 {% else %}
-                  <p>No posts are available right now.</p>
+                  {% if jobPosts %} <ul>
+                    {% for post in jobPosts %}
+                      <li><a href="/{{ post.id }}/r">
+                        {{ post.position_title }} by <i> {{post.company}} </i> at {{post.location}} </a> - <a href="/{{ post.id }}/change">[EDIT POST]</a> - <a href="/{{ post.id }}/delete">[DELETE POST]</a> - <a href="/{{ post.id }}/makeOffer">[MAKE OFFER]</a></li>
+                    {% endfor %} </ul>
+                  {% else %}
+                    <p>No posts are available right now.</p>
+                  {% endif %}
                 {% endif %}
             
             {% else %}
