@@ -9,7 +9,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from tindev.forms import CandidateForm, RecruiterForm, CreatePostForm, OffersForm
 from tindev.models import CandidateProfile, RecruiterProfile, CreatePost, Offers
-import datetime
+import datetime, re
+from django.template.defaulttags import register
+
 
 
 def logout_view(request):
@@ -306,10 +308,25 @@ def deletePost(request, post_id):
 
     return redirect(recruiterDashboard)
 
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)
 
 def makeoffer(request, post_id):
 
     interested = CandidateProfile.objects.filter(interested__id=post_id)
+    current = CreatePost.objects.get(id = post_id)
+    vals = {}
+
+    for i in interested:
+        count = 0
+        if i.years_experience > '2':
+            count += 1
+        if re.search(current.preferred_skills, i.skills):
+            count += 2
+        if re.search(current.preferred_skills, i.bio):
+            count += 1
+        vals[i.name] = (count/4)*100
 
     if request.POST:
         form = OffersForm(request.POST)
@@ -322,4 +339,4 @@ def makeoffer(request, post_id):
             job.save()
         return redirect(recruiterDashboard)
     
-    return render(request, 'tindev/makeoffer.html', {'form':OffersForm, "interested":interested, 'jobID':post_id})
+    return render(request, 'tindev/makeoffer.html', {'form':OffersForm, "interested":interested, 'jobID':post_id, "vals":vals})

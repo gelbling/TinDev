@@ -1,4 +1,5 @@
 {% extends  'tindev/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block main %}
     <!doctype html>
@@ -57,6 +58,21 @@
 
         {% if request.session.logged_user %}
           <h3>Job postings</h3>
+
+          <form method="POST" action="{{ views.candidateDashboard }}" enctype="multipart/form-data">
+
+            {% csrf_token %}
+            {{ form|crispy }}
+
+            <select name="search" id="search" onchange="this.form.submit()" >
+              <option value="all-posts"  >All Posts</option>
+              <option value="active-posts" >Active Posts</option>
+              <option value="inactive-posts" >Inactive Posts</option>
+              <option value="location" >Location</option>
+              <option value="keywords" >Keywords</option>
+            </select>
+
+          </form>
 
             {% if jobPosts %} <ul>
               {% for post in jobPosts %}

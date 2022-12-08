@@ -27,7 +27,7 @@
                     <input type="radio" value="{{ interest.name }}" name="candidates" required>
                     {{ interest.name }}
                     </label>
-                    <br>
+                    <p> - Compatibility percentage: {{ vals|get_item:interest.name }}%</p>
                 {% endfor %}
                 {% else %}
                     <p>Job has no interested candidates...</p>
