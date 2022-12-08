@@ -157,6 +157,59 @@ def offerDecision(request, post_id):
 
 
 
+def candidateDashboard(request):
+
+    if request.POST:
+        search = request.POST.get("search")
+        keyword = request.POST.get("keyword")
+
+        if search == 'inactive-posts':
+            jobPosts = CreatePost.objects.filter(is_active = False)
+            return render(request, 'tindev/candidateDashboard.html', {'jobPosts':jobPosts, 'searchTerm':search})
+        elif search == 'active-posts':
+
+            jobPosts = CreatePost.objects.filter(is_active = True)
+
+            return render(request, 'tindev/candidateDashboard.html', {'jobPosts':jobPosts, 'searchTerm':search})
+        elif search == 'posts_based_on_keywords':
+
+            jobPosts = CreatePost.objects.all()
+
+            posts = {}
+
+            postName = 'post'
+
+            for job in jobPosts:
+                postName = 'post'
+                if (re.search(keyword, job.description) != None):
+                    postName = postName + str(job.id)
+                    posts[postName] = job
+
+            return render(request, 'tindev/candidateDashboard.html', {'jobPosts':posts, 'searchTerm':search})
+        elif search == 'posts_based_on_location':
+
+            jobPosts = CreatePost.objects.all()
+
+            posts = {}
+
+            postName = 'post'
+
+            for job in jobPosts:
+                postName = 'post'
+                if (re.search(keyword, job.location) != None):
+                    postName = postName + str(job.id)
+                    posts[postName] = job
+
+            return render(request, 'tindev/candidateDashboard.html', {'jobPosts':posts, 'searchTerm':search})
+        else:
+            jobPosts = CreatePost.objects.all()
+           
+            return render(request, 'tindev/candidateDashboard.html', {'jobPosts':jobPosts, 'searchTerm':search})
+
+    search = "all-posts"
+    jobPosts = CreatePost.objects.all()
+
+    return render(request, 'tindev/candidateDashboard.html', {'jobPosts':jobPosts, 'searchTerm':search})
 
 
 def candidateDashboard(request):
@@ -174,15 +227,35 @@ def candidateDashboard(request):
 
             return render(request, 'tindev/candidateDashboard.html', {'jobPosts':jobPosts, 'searchTerm':search})
         elif search == 'posts_based_on_keywords':
-            #jobPosts = CreatePost.objects.filter(is_active = True)
-            #print(re.search(current.preferred_skills, i.skills))
-            #j = CreatePost.objects.get().description
-            #print(j)
+
             jobPosts = CreatePost.objects.all()
-            return render(request, 'tindev/candidateDashboard.html', {'jobPosts':jobPosts, 'searchTerm':search})
+
+            posts = {}
+
+            postName = 'post'
+
+            for job in jobPosts:
+                postName = 'post'
+                if (re.search(keyword, job.description) != None):
+                    postName = postName + str(job.id)
+                    posts[postName] = job
+
+            return render(request, 'tindev/candidateDashboard.html', {'jobPosts':posts, 'searchTerm':search})
         elif search == 'posts_based_on_location':
+
             jobPosts = CreatePost.objects.all()
-            return render(request, 'tindev/candidateDashboard.html', {'jobPosts':jobPosts, 'searchTerm':search})
+
+            posts = {}
+
+            postName = 'post'
+
+            for job in jobPosts:
+                postName = 'post'
+                if (re.search(keyword, job.location) != None):
+                    postName = postName + str(job.id)
+                    posts[postName] = job
+
+            return render(request, 'tindev/candidateDashboard.html', {'jobPosts':posts, 'searchTerm':search})
         else:
             jobPosts = CreatePost.objects.all()
            
@@ -192,7 +265,6 @@ def candidateDashboard(request):
     jobPosts = CreatePost.objects.all()
 
     return render(request, 'tindev/candidateDashboard.html', {'jobPosts':jobPosts, 'searchTerm':search})
-
 
 def recruiterDashboard(request):
 
