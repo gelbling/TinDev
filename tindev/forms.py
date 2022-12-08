@@ -8,6 +8,7 @@ from django.shortcuts import render
 from crispy_forms.helper import FormHelper
 from django.forms.widgets import DateInput
 
+# form for creating candidate profile
 class CandidateForm(ModelForm):
 
     name = forms.TextInput()
@@ -24,6 +25,7 @@ class CandidateForm(ModelForm):
         model = CandidateProfile
         fields = ['name', 'bio', 'zip_code', 'skills', 'github', 'years_experience', 'education', 'username', 'password']
 
+# form for creating recruiter profile
 class RecruiterForm(ModelForm):
 
     name = forms.TextInput()
@@ -36,6 +38,8 @@ class RecruiterForm(ModelForm):
         model = RecruiterProfile
         fields = ['name', 'company', 'zip_code','username','password']
 
+
+# form for creating job post
 class CreatePostForm(ModelForm):
     
     position_title = forms.TextInput()
@@ -45,18 +49,17 @@ class CreatePostForm(ModelForm):
     description = forms.TextInput()
     company = forms.TextInput()
     expiration_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
-#   is_active = forms.CheckboxInput()
 
     class Meta:
         model = CreatePost
         fields = ['position_title','type','location','preferred_skills','description', 'company', 'expiration_date']
 
+
+# form for creating job offer
 class OffersForm(ModelForm):
     
     salary = forms.TextInput()
     due_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
-    #candidate = forms.TextInput()
-    #job = forms.TextInput()
 
     class Meta:
         model = Offers

@@ -13,21 +13,26 @@ import datetime, re
 from django.template.defaulttags import register
 
 
-
+# logout view function, displays logout message
 def logout_view(request):
     del request.session["logged_user"]
     messages.info(request, 'You have successfully logged out!')
     return redirect('home')
 
 
+# login view function for user
+# only users that match either a candidate or recruiter profile can login
+# upon login candidates and recruiters are redirected to respective pages, and dont have access to eachothers pages
 def user_login(request):
 
     if request.POST:
 
+        # get form info
         username = request.POST.get('username')
         password = request.POST.get('password')
         user_type = request.POST.get('profile')
 
+        # check user type
         if user_type == 'Candidate':
             candidate = CandidateProfile.objects.filter(username=username, password=password) 
             if len(list(candidate)) == 0:
@@ -39,6 +44,7 @@ def user_login(request):
                 request.session["role"] = "Candidate"
                 return redirect(candidateDashboard)
 
+        # check user type
         elif user_type == 'Recruiter':
             recruiter = RecruiterProfile.objects.filter(username=username, password=password)
             if len(list(recruiter)) == 0:   
@@ -67,7 +73,8 @@ def user_login(request):
     return render(request, 'tindev/login.html')
 
 
-
+# view function for creating the candidate profile
+# use a form to add candidateProfile object to the database
 def candidateProfile(request):
     if request.POST:
         form = CandidateForm(request.POST)
@@ -77,7 +84,8 @@ def candidateProfile(request):
     return render(request, 'tindev/candidateProfile.html', {'form':CandidateForm}) 
 
 
-
+# view function for creating the recruiter profile
+# use a form to add recruiterProfile object to the database
 def recruiterProfile(request):
     if request.POST:
         form = RecruiterForm(request.POST)
@@ -87,10 +95,13 @@ def recruiterProfile(request):
     return render(request, 'tindev/recruiterProfile.html', {'form':RecruiterForm}) 
 
 
+# simple home function, renders the html home page
 def home(request):
     return render(request, 'tindev/home.html')
 
 
+# view function for a recruiter to create a post
+# use a form to add job post object to the database
 def createPost(request):
     if request.POST:
         form = CreatePostForm(request.POST)
@@ -102,10 +113,7 @@ def createPost(request):
     return render(request, 'tindev/createpost.html', {'form':CreatePostForm})
 
 
-##########################################################################
-####################### DASHBOARDS / VIEWING POSTS #######################
-##########################################################################
-
+# get interested positions according to logged user and display them
 def interestedPositions(request):
 
     # get current profile from database
@@ -117,12 +125,14 @@ def interestedPositions(request):
     return render(request, 'tindev/interested.html', {'interested_jobs':interested_jobs})
 
 
-
+# render offers html page, acording to the logged user offer (if he/she has any )
 def offers(request):
 
     offers = Offers.objects.filter(candidate=request.session["id"]).all()
 
     return render(request, 'tindev/offers.html', {'offers':offers, 'today':datetime.date.today()})
+
+
 
 # according to user choice, accept or decline job offer
 def offerDecision(request, post_id):
@@ -156,13 +166,17 @@ def offerDecision(request, post_id):
         return redirect(offers)
 
 
-
+# render cadidate dashboard, with available job postings
+# allow for filtering of job postings
 def candidateDashboard(request):
 
     if request.POST:
+
+        # get form entries
         search = request.POST.get("search")
         keyword = request.POST.get("keyword")
 
+        # check filter input
         if search == 'inactive-posts':
             jobPosts = CreatePost.objects.filter(is_active = False)
             return render(request, 'tindev/candidateDashboard.html', {'jobPosts':jobPosts, 'searchTerm':search})
@@ -188,6 +202,8 @@ def candidateDashboard(request):
             return render(request, 'tindev/candidateDashboard.html', {'jobPosts':posts, 'searchTerm':search})
         elif search == 'posts_based_on_location':
 
+            # pass specific filtered jobs to the page using dict and render function
+
             jobPosts = CreatePost.objects.all()
 
             posts = {}
@@ -211,6 +227,9 @@ def candidateDashboard(request):
 
     return render(request, 'tindev/candidateDashboard.html', {'jobPosts':jobPosts, 'searchTerm':search})
 
+
+# render recruiter dashboard, with available job postings
+# allow for filtering of job postings
 def recruiterDashboard(request):
 
     candidates = CandidateProfile.objects.all()
@@ -221,6 +240,7 @@ def recruiterDashboard(request):
                 
     if request.POST:
         search = request.POST.get("search")
+        # check filter input
         if search == 'inactive-posts':
             jobPosts = CreatePost.objects.filter(recruiter=request.session['id'])
             post = jobPosts.filter(is_active = False)
@@ -252,6 +272,8 @@ def recruiterDashboard(request):
     return render(request, 'tindev/recruiterDashboard.html', {'jobPosts':jobPosts, 'searchTerm':search, 'totalInterested':totalInterested})
 
 
+# interes or not interested button logic
+# if interested add post object to candidates many to many 'interested' field
 def interested(request): 
     if request.POST:
 
@@ -324,6 +346,7 @@ def detail_r(request, post_id):
     return render(request, 'tindev/post_recruiter.html', {'post': post}) # route to results html page 
 
 
+# logic for the recruiter to be able to edit job posts
 def editPost(request, post_id):
 
     post = CreatePost.objects.get(id=post_id)
@@ -348,7 +371,7 @@ def editPost(request, post_id):
     return render(request, 'tindev/editPost.html', {'form':form})
 
 
-
+# logic for recruiter to delete posts he made
 def deletePost(request, post_id):
 
     post = CreatePost.objects.get(id=post_id)
@@ -356,6 +379,8 @@ def deletePost(request, post_id):
 
     return redirect(recruiterDashboard)
 
+# function to allow recruiter to make offer to candidate
+# creating offer object and linking it to candidate and job object
 def makeoffer(request, post_id):
 
     interested = CandidateProfile.objects.filter(interested__id=post_id)
