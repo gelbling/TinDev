@@ -58,10 +58,10 @@
                 <li><a href="/{{ job.id }}/">
                     {{ job.position_title }} by <i> {{job.company}} </i> in {{job.location}} 
                 </a></li>
-                <p>The job offer will expire in {{ job.expiration_date }}</p>
+                <p>This job listing will expire in {{ job.expiration_date }}</p>
               {% endfor %} </ul>
             {% else %}
-              <p>No offers are available right now.</p>
+              <p>You have no interested positions.</p>
             {% endif %}
         {% else %}
           <p style=background-color:#E47EA1;text-align:center>You are not logged in.</p>

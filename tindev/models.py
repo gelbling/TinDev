@@ -45,11 +45,12 @@ class CandidateProfile(models.Model):
     def __str__(self):
         return self.name
 
+
 class Offers(models.Model):
 
     salary = models.CharField(max_length=50)
     due_date = models.DateField( )
-    acepted = models.BooleanField(null=True, blank=True, choices=[('False', 'False'), ('True', 'True')])\
+    acepted = models.BooleanField(null=True, blank=True, choices=[('False', 'False'), ('True', 'True')])
     
     candidate = models.ForeignKey(CandidateProfile, on_delete=models.CASCADE, null=True, blank=True)
     job = models.ForeignKey(CreatePost, on_delete=models.CASCADE, null=True, blank=True)

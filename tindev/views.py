@@ -114,9 +114,47 @@ def interestedPositions(request):
 
     return render(request, 'tindev/interested.html', {'interested_jobs':interested_jobs})
 
+
+
 def offers(request):
 
-    return render(request, 'tindev/offers.html')
+    offers = Offers.objects.filter(candidate=request.session["id"]).all()
+
+    return render(request, 'tindev/offers.html', {'offers':offers, 'today':datetime.date.today()})
+
+# according to user choice, accept or decline job offer
+def offerDecision(request, post_id):
+    
+    # use post request for the form
+    if request.POST:
+
+        # get decision value, 1 for accepted and 2 for denied
+        decision = request.POST.get("decision_btn")
+
+        # check of accepted
+        if decision == '1':
+            # match the job offer to the current job's id (passed into the function)
+            job = Offers.objects.get(pk=post_id)
+            # change the offer status to True (accepted)
+            job.acepted = True
+            # save the updated model
+            job.save()
+            
+        else:
+            # match the job offer to the current job's id (passed into the function)
+            job = Offers.objects.get(pk=post_id)
+            # change the offer status to False (declined)
+            job.acepted = False
+            # save the updated modelz
+            job.save()
+
+        # redirect to candidate profile
+        return redirect(offers)
+    else:
+        return redirect(offers)
+
+
+
 
 
 def candidateDashboard(request):

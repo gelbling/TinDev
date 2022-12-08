@@ -57,12 +57,39 @@
 
         {% if request.session.logged_user %}
             <h3>Job Offers</h3>
-            {% if jobOffers %} <ul>
-              {% for post in jobOffers %}
-                <li><a href="/{{ offer.id }}/">
-                    {{ offer.position_title }} by <i> {{offer.company}} </i> in {{offer.location}} 
-                </a></li>
-                <p>The job offer is for {{ offer.salary }} and will end on {{ offer.due }} </p>
+            {% if offers %} <ul>
+              {% for offer in offers %}
+                <li>
+                    {{ offer.job.position_title }}
+                </li>
+
+                {% if today <= offer.due_date %}
+                  <p>The job offer is for {{ offer.salary }} and will end on {{ offer.due_date }} </p>
+                    {% if offer.acepted == True %}
+                        <p>Offer Status: ACCEPTED</p>
+                    {% elif offer.acepted == False %}
+                        <p>Offer Status: DECLINED</p>
+                    {% else %}
+                        <p>Offer Status: PENDING DECISION</p>
+                    {% endif %}
+                <div>
+                  <form action="{% url 'offerdecision' offer.id %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" id="{{ offer.id }}" name="decision_btn" value="1" name='accept_btn'>Accept Offer</button>
+                  <button type="submit" id="{{ offer.id }}" name="decision_btn" value="2" name='decline_btn'>Decline Offer</button>
+                  </form>
+                </div>
+              {% else %}
+                <p>The job offer for {{ offer.salary }} expired on {{ offer.due_date }} </p>
+                {% if offer.acepted == True %}
+                  <p>Offer Status: ACCEPTED</p>
+                {% elif offer.acepted == False %}
+                  <p>Offer Status: DECLINED</p>
+                {% else %}
+                  <p>Offer Status: MISSED DECISION DEADLINE</p>
+                {% endif %}
+              {% endif %}
+              <br>
               {% endfor %} </ul>
             {% else %}
               <p>No offers are available right now.</p>
