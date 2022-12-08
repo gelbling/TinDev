@@ -87,7 +87,7 @@
 
                 {% for key, value in jobPosts.items %}
                 <li>
-                  <a href="/{{ post.id }}/r">{{ value.position_title }} by <i> {{value.company}} </i> at {{value.location}} </a> has {{ totalInterested|get_item:post.id }} interested candidates. - <a href="/{{ value.id }}/change">[EDIT POST]</a> - <a href="/{{ value.id }}/delete">[DELETE POST]</a> - <a href="/{{ value.id }}/makeOffer">[MAKE OFFER]</a>
+                  <a href="/{{ post.id }}/r">{{ value.position_title }} by <i> {{value.company}} </i> at {{value.location}} </a> has {{ totalInterested|get_item:value.id }} interested candidates. - <a href="/{{ value.id }}/change">[EDIT POST]</a> - <a href="/{{ value.id }}/delete">[DELETE POST]</a> - <a href="/{{ value.id }}/makeOffer">[MAKE OFFER]</a>
                 </li>
                 {% endfor %}
 

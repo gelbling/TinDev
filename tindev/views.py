@@ -224,13 +224,13 @@ def recruiterDashboard(request):
         if search == 'inactive-posts':
             jobPosts = CreatePost.objects.filter(recruiter=request.session['id'])
             post = jobPosts.filter(is_active = False)
-            return render(request, 'tindev/recruiterDashboard.html', {'jobPosts':post, 'searchTerm':search})
+            return render(request, 'tindev/recruiterDashboard.html', {'jobPosts':post, 'searchTerm':search, 'totalInterested':totalInterested})
         elif search == 'active-posts':
             jobPosts = CreatePost.objects.filter(recruiter=request.session['id'])
 
             post = jobPosts.filter(is_active = True)
 
-            return render(request, 'tindev/recruiterDashboard.html', {'jobPosts':post, 'searchTerm':search})
+            return render(request, 'tindev/recruiterDashboard.html', {'jobPosts':post, 'searchTerm':search, 'totalInterested':totalInterested})
         elif search == 'interested-candidates-posts':
             jobPosts = CreatePost.objects.filter(recruiter=request.session['id'])
             posts = {}
@@ -241,7 +241,7 @@ def recruiterDashboard(request):
                     postName = postName + str(job.id)
                     posts[postName] = job
 
-            return render(request, 'tindev/recruiterDashboard.html', {'jobPosts':posts, 'searchTerm':search})
+            return render(request, 'tindev/recruiterDashboard.html', {'jobPosts':posts, 'searchTerm':search, 'totalInterested':totalInterested})
         else:
             jobPosts = CreatePost.objects.filter(recruiter=request.session['id'])
            
