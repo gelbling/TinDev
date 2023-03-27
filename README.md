@@ -1,4 +1,4 @@
-# Paradigms Project Group 14
+# TinDev Platform
 
 # About The Project
 
