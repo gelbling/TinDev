@@ -1,6 +1,6 @@
 # TinDev Platform
 
-# About The Project
+## About The Project
 
 Our project is a Python + Django application that acts as a platform to connect
 recruiters to potential candidates within the technological space. The information
